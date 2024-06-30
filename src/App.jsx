@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import Nevbar from './components/Nevbar'
 
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
 
   return (
     <>
-      <div className="container">
+    <Nevbar/>
+      <div className="container mx-auto" >
         <div className="bg-red-600">
           hey iam red
         </div>
