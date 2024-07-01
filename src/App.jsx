@@ -2,6 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Nevbar from './components/Nevbar'
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
 
   }
   const handleAdd = ()=>{
-    setTodos([...todos, {todo, isCompleted : false}])
+    setTodos([...todos, {todo, id:uuidv4(), isCompleted : false}])
     setTodo(" ")
     console.log(todos)
 
@@ -28,6 +30,20 @@ function App() {
     setTodo(e.target.value)
 
   }
+  const handleCheckbox = (e) => {
+    console.log(e,e.target)
+    let id = e.target.name
+    console.log(`the id is ${id}`)
+    let index = todos.findIndex(item=>{
+      return item.id === id
+    })
+    console.log(`the index is ${index}`)
+    let newTodos = [...todos];
+    newTodos[index].isCompleted = !newTodos[index].isCompleted
+    setTodos(newTodos) 
+    console.log(`this is new tods ${newTodos}`)
+  }
+  
 
   
 
@@ -47,8 +63,9 @@ function App() {
         <div className="todos">
           {todos.map(item=>{
 
-       return  <div className="todo flex w-1/4 my-3 justify-between">
-          <div className={item.isCompleted?"":"line-through" }>{item.todo}</div>
+       return  <div key = {item.id} className="todo flex w-1/4 my-3 justify-between">
+        <input name = {item.id} onChange={handleCheckbox} value={item.isCompleted} type="checkbox" id="" />
+          <div className={item.isCompleted?"line-through":""}>{item.todo}</div>
           <div className="buttons">
            <button onClick= {handleEdit} className='bg-violet-800 hover:bg-violet-950 p-2 text-sm font-bold py-1 text-white rounded-md mx-1'>Edit</button>
            <button onClick={handleDelete} className='bg-violet-800 hover:bg-violet-950 p-2 text-sm font-bold py-1 text-white rounded-md mx-1'>Delete</button>
